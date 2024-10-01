@@ -1,0 +1,15 @@
+.card:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    z-index: 1;
+}
+.card{
+    box-shadow: 10px 5px 5px rgb(75, 74, 74);
+}
+.navbar{
+    background-color: rgb(170, 198, 170) !important;
+    color: rgb(78, 76, 76) !important;
+}
+h1{
+    color: rgb(170, 198, 170);
+}
