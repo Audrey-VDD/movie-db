@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import GenresServices from "../Services/GenresServices";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 const GenresPage = () => {
 
@@ -13,12 +14,14 @@ const GenresPage = () => {
 
         }
     }
-
     useEffect(() => {
         fetchGenres()
-    }, [])
+    }, []);
 
-
+    const navigate = useNavigate();
+    const navigateTo = (id)=>{
+        navigate("/genre/"+id);
+    }
 
     return <>
         <div className="d-flex justify-content-center" >
@@ -27,7 +30,7 @@ const GenresPage = () => {
 
         <div className="d-flex justify-content-center flex-wrap gap-4" >
             {genres.map((genre) => {
-                return <Button variant="secondary" key={genre.id} >{genre.name}</Button>
+                return <Button variant="secondary" key={genre.id} onClick={() => {navigateTo(genre.id)}} >{genre.name}</Button>
             })}
         </div>
 

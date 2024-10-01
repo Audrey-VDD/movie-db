@@ -15,14 +15,10 @@ const MovieDetailsPage = () => {
             console.log(response.data);
 
             setMovie(response.data);
-
-
         } catch (error) {
             console.log(error);
-
         }
     }
-
     useEffect(() => {
         fetchMovieById();
     }, [])

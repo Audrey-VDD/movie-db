@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage'
 import GenresPage from './Pages/GenresPage'
 import NavBar from './Components/NavBar';
 import MovieDetailsPage from './Pages/MovieDetailsPage';
+import GenreDetails from './Pages/GenreDetails';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<HomePage></HomePage>} />
         <Route path='/genres' element={<GenresPage></GenresPage>} />
         <Route path='/movie/:id' element={<MovieDetailsPage></MovieDetailsPage>}/>
+        <Route path='/genre/:id' element={<GenreDetails></GenreDetails>}/>
       </Routes>
     </BrowserRouter>
   </>
