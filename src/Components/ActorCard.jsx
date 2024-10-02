@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 const ActorCard = ({actorCard}) => {
     const navigate = useNavigate();
     const navigateTo = (id) => {
-        navigate("/actors"+id);
+        navigate("/actors/"+id);
     }
 
 

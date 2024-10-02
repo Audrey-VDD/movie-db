@@ -1,49 +1,59 @@
+import { useParams } from "react-router-dom";
 import ActorsServices from "../Services/ActorsServices";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import ActorCard from "../Components/ActorCard";
+import MovieCard from "../Components/MovieCard";
 import { Pagination } from "react-bootstrap";
 
-
-
-const ActorsPage = () => {
-    const {id} = useParams();
+const ActorDetailsPage = () => {
+    const { id } = useParams();
+    const [actor, setActor] = useState({});
+    const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(500);
-    const [actors, setActors] = useState([]);
+    const [maxPage, setMaxPage] = useState(20);
 
-    const fetchActors = async () => {
+    const fetchActorById = async () => {
         try {
-            const response = await ActorsServices.getAllActors(currentPage);
-            setActors(response.data.results);
-            console.log(response.data.results);
-            setTimeout(() => {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "instant",
-                  });
-            },50)
-            
-        } catch (error) {
+            const response = await ActorsServices.getActorByID(id);
+            setActor(response.data);
 
+        } catch (error) {
+            console.log(error);
         }
     }
-    useEffect(() => {
-        fetchActors()
-    }, [currentPage]);
 
-    const navigate = useNavigate();
-    const navigateTo = (actor) => {
-        navigate("/actors/"+actor.id);
+    const fetchMovieByActorId = async () => {
+        try {
+            const response = await ActorsServices.getMovieByActorId(id);
+            setMovies(response.data.results);
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 
+    useEffect(() => {
+        fetchActorById(); fetchMovieByActorId()
+    }, [currentPage])
+
     return <>
-        <h1>Acteurs / Actrices</h1>
+
+        <div className="d-flex justify-content-center" >
+            {actor.name}
+        </div>
+
+
+        <img style={{ width: '9rem' }} src={"https://image.tmdb.org/t/p/original" + actor.profile_path} alt="picture-actor" />
+
+        <img src="" alt="" />
+        <div className="d-flex flex-column align-items-center col-6" >
+            <p>{actor.birthday}</p>
+            <p>{actor.place_of_birth}</p>
+            <p>Bio : {actor.biography}</p>
+        </div>
 
         <div className="d-flex justify-content-center flex-wrap gap-4" >
-            {actors.map((actor) => {
-                return <ActorCard actorCard={actor} key={actor.id} onClick={() => {navigateTo(actor.id)}} ></ActorCard>
+            {movies.map((movie) => {
+                return <MovieCard movieCard={movie} key={movie.id} ></MovieCard>
             })}
         </div>
 
@@ -86,4 +96,4 @@ const ActorsPage = () => {
     </>;
 }
 
-export default ActorsPage;
+export default ActorDetailsPage;
