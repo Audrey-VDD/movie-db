@@ -1,47 +1,40 @@
+import ActorsServices from "../Services/ActorsServices";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import GenresServices from "../Services/GenresServices";
-import MovieCard from "../Components/MovieCard";
-import Pagination from 'react-bootstrap/Pagination';
+import { useParams } from "react-router-dom";
+import ActorCard from "../Components/ActorCard";
+import { Pagination } from "react-bootstrap";
 
-const GenreDetails = () => {
-    // récupère id de mon /genre/:id
-    const { id } = useParams();
-    const location = useLocation();
-    const [movies, setMovies] = useState([]);
+
+
+const ActorsPage = () => {
+    const {id} = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(500);
+    const [actors, setActors] = useState([]);
 
-
-    const fetchMoviesByGenreId = async () => {
+    const fetchActors = async () => {
         try {
-            const response = await GenresServices.getMoviesByGenreId(currentPage, id);
-            setMovies(response.data.results);
-            setTimeout(() => {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "instant",
-                  });
-            },50)
+            const response = await ActorsServices.getAllActors(currentPage);
+            setActors(response.data.results);
+            console.log(response.data.results);
+
+            ;
         } catch (error) {
-            console.log(error);
+
         }
     }
     useEffect(() => {
-        fetchMoviesByGenreId();
-    }, [currentPage])
+        fetchActors()
+    }, [currentPage]);
 
-    
-    
+
+
     return <>
-        <div className="d-flex justify-content-center" >
-            <h1>{location.state.genre.name}</h1>
-            
-        </div>
+        <h1>Acteurs / Actrices</h1>
+
         <div className="d-flex justify-content-center flex-wrap gap-4" >
-            {movies.map((movie) => {
-                return <MovieCard movieCard={movie} key={movie.tittle}></MovieCard>
+            {actors.map((actor) => {
+                return <ActorCard actorCard={actor} key={actor.id} ></ActorCard>
             })}
         </div>
 
@@ -81,9 +74,7 @@ const GenreDetails = () => {
             </Pagination>
         </div>
 
-
-
     </>;
 }
 
-export default GenreDetails;
+export default ActorsPage;

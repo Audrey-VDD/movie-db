@@ -19,8 +19,9 @@ const GenresPage = () => {
     }, []);
 
     const navigate = useNavigate();
-    const navigateTo = (id)=>{
-        navigate("/genre/"+id);
+    const navigateTo = (genre)=>{
+        // On lui dit qu'on va passer de la page genre aux genres sans que ça apparaisse dans l'URL
+        navigate("/genre/"+genre.id, {state : {"genre" : genre}});
     }
 
     return <>
@@ -30,7 +31,7 @@ const GenresPage = () => {
 
         <div className="d-flex justify-content-center flex-wrap gap-4" >
             {genres.map((genre) => {
-                return <Button variant="secondary" key={genre.id} onClick={() => {navigateTo(genre.id)}} >{genre.name}</Button>
+                return <Button variant="secondary" key={genre.id} onClick={() => {navigateTo(genre)}} >{genre.name}</Button>
             })}
         </div>
 

@@ -14,7 +14,13 @@ const HomePage = () => {
             const response = await MoviesServices.getAllMovies(currentPage);
             setMovies(response.data.results);
             // setMaxPage(response.data.total_pages);
-            
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "instant",
+                  });
+            },50)
 
         } catch (error) {
 
