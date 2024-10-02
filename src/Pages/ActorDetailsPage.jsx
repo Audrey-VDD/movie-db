@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import ActorsServices from "../Services/ActorsServices";
 import { useEffect, useState } from "react";
 import MovieCard from "../Components/MovieCard";
-import { Pagination } from "react-bootstrap";
+import { Container, Pagination } from "react-bootstrap";
 
 const ActorDetailsPage = () => {
     const { id } = useParams();
@@ -23,11 +23,11 @@ const ActorDetailsPage = () => {
 
     const fetchMovieByActorId = async () => {
         try {
-            const response = await ActorsServices.getMovieByActorId(id);
+            const response = await ActorsServices.getMovieByActorId(currentPage, id);
             setMovies(response.data.results);
         } catch (error) {
             console.log(error);
-            
+
         }
     }
 
@@ -35,22 +35,28 @@ const ActorDetailsPage = () => {
         fetchActorById(); fetchMovieByActorId()
     }, [currentPage])
 
-    return <>
+    return <Container className="d-flex flex-column align-items-center">
 
-        <div className="d-flex justify-content-center" >
+        <div className="d-flex justify-content-center mt-3 mb-3">
+            <img style={{ width: '9rem' }} src={"https://image.tmdb.org/t/p/original" + actor.profile_path} alt="picture-actor" />
+        </div>
+        <div className="d-flex justify-content-center mb-3 mt-3" >
             {actor.name}
         </div>
 
-
-        <img style={{ width: '9rem' }} src={"https://image.tmdb.org/t/p/original" + actor.profile_path} alt="picture-actor" />
-
-        <img src="" alt="" />
-        <div className="d-flex flex-column align-items-center col-6" >
-            <p>{actor.birthday}</p>
-            <p>{actor.place_of_birth}</p>
-            <p>Bio : {actor.biography}</p>
+        <div className="d-flex justify-content-center mb-3 mt-3">
+            {actor.birthday}
+        </div>
+        <div className="d-flex justify-content-center mb-5 mt-3">
+            {actor.place_of_birth}
+        </div>
+        <div className="d-flex justify-content-center mb-6">
+            {actor.biography}
         </div>
 
+
+
+        <h4>Ses films :</h4>
         <div className="d-flex justify-content-center flex-wrap gap-4" >
             {movies.map((movie) => {
                 return <MovieCard movieCard={movie} key={movie.id} ></MovieCard>
@@ -93,7 +99,7 @@ const ActorDetailsPage = () => {
             </Pagination>
         </div>
 
-    </>;
+    </Container>;
 }
 
 export default ActorDetailsPage;

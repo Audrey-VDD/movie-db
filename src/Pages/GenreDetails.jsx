@@ -41,7 +41,7 @@ const GenreDetails = () => {
         </div>
         <div className="d-flex justify-content-center flex-wrap gap-4" >
             {movies.map((movie) => {
-                return <MovieCard movieCard={movie} key={movie.tittle}></MovieCard>
+                return <MovieCard movieCard={movie} key={movie.tittle} ></MovieCard>
             })}
         </div>
 
