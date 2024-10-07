@@ -7,7 +7,7 @@ import { Pagination } from "react-bootstrap";
 
 
 const ActorsPage = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(500);
     const [actors, setActors] = useState([]);
@@ -16,15 +16,15 @@ const ActorsPage = () => {
         try {
             const response = await ActorsServices.getAllActors(currentPage);
             setActors(response.data.results);
-            
+
             setTimeout(() => {
                 window.scrollTo({
                     top: 0,
                     left: 0,
                     behavior: "instant",
-                  });
-            },50)
-            
+                });
+            }, 50)
+
         } catch (error) {
 
         }
@@ -35,15 +35,16 @@ const ActorsPage = () => {
 
     const navigate = useNavigate();
     const navigateTo = (actor) => {
-        navigate("/actors/"+actor.id);
+        navigate("/actors/" + actor.id);
     }
 
     return <>
-        <h1>Acteurs / Actrices</h1>
-
+        <div className="d-flex justify-content-center flex-wrap gap-4" >
+            <h1>Acteurs / Actrices</h1>
+        </div>
         <div className="d-flex justify-content-center flex-wrap gap-4" >
             {actors.map((actor) => {
-                return <ActorCard actorCard={actor} key={actor.id} onClick={() => {navigateTo(actor.id)}} ></ActorCard>
+                return <ActorCard actorCard={actor} key={actor.id} onClick={() => { navigateTo(actor.id) }} ></ActorCard>
             })}
         </div>
 
