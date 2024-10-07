@@ -5,11 +5,12 @@ import MovieCard from "../Components/MovieCard";
 import { Container, Pagination } from "react-bootstrap";
 
 const ActorDetailsPage = () => {
+    // On va chercher dans l'url, l'ID pour pouvoir avoir l'ID de l'acteur
     const { id } = useParams();
     const [actor, setActor] = useState({});
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(20);
+    const [maxPage, setMaxPage] = useState();
 
     const fetchActorById = async () => {
         try {
@@ -25,6 +26,16 @@ const ActorDetailsPage = () => {
         try {
             const response = await ActorsServices.getMovieByActorId(currentPage, id);
             setMovies(response.data.results);
+            setMaxPage(response.data.total_pages);
+
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 300,
+                    left: 0,
+                    behavior: "instant",
+                  });
+            },50)
+            
         } catch (error) {
             console.log(error);
 
@@ -32,7 +43,10 @@ const ActorDetailsPage = () => {
     }
 
     useEffect(() => {
-        fetchActorById(); fetchMovieByActorId()
+        fetchActorById();
+    }, [])
+    useEffect(() => {
+        fetchMovieByActorId()
     }, [currentPage])
 
     return <Container className="d-flex flex-column align-items-center">

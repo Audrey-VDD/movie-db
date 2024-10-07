@@ -16,7 +16,7 @@ const ActorsPage = () => {
         try {
             const response = await ActorsServices.getAllActors(currentPage);
             setActors(response.data.results);
-            console.log(response.data.results);
+            
             setTimeout(() => {
                 window.scrollTo({
                     top: 0,
